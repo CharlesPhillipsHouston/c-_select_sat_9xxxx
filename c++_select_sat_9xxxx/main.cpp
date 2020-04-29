@@ -3,6 +3,8 @@
 //  Copyright © 2019 charles phillips. All rights reserved.
 //  read in a TLE, all three lines, and fscanf the individual lines
 // runs on Mike's computer, on the MacBook Pro, and on the Mac Mini
+// this finds a list of satellites and puts them into their own files
+// right now it gets a few of the later NOSS satellites
 
 #include <iostream>
 #include <stdio.h>
@@ -143,7 +145,7 @@ int main(void)
 #endif
 
 #ifdef CHARLES_Mini
-    spInput = fopen("/Users/Charles/Documents/satellites_analyzed/sorted/input_tles.txt", "r");  // read data from folder where the code is - now taken from
+    spInput = fopen("/Users/Charles/Documents/satellites_to_analyze/alltle.txt", "r");  // read data from folder where the code is - now taken from
   //  spOutput = fopen("/Users/Charles/Documents/satellites_analyzed/sorted/sats_out.txt", "a");
     // put output in folder "sorted"
     spOutput40978 = fopen("/Users/Charles/Documents/satellites_analyzed/noss/40978.txt", "a");
