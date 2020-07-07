@@ -112,19 +112,20 @@ void printParameters (FILE* spOutput)   // move all print statements here???
 }
 int main(void)
 {
-    
+    // let's look at some satellites with low perigees
     FILE* spInput; // input points to file to read from
     
    // FILE* spOutput; // output points to file to write to
-    FILE* spOutput38758;  // 38758
-    FILE* spOutput38770; // for 38770
-    FILE* spOutput38773;  // a file just for TLEs for 38773
-    FILE* spOutput40964;  // for 40964
-    FILE* spOutput40978; // for 40978
-    FILE* spOutput40981; // for 40981
+    FILE* spOutput11720;  // 11720 - low perigee
+    FILE* spOutput16591; // for 16591
+    
+  // FILE* spOutput38773;  // a file just for TLEs for 38773
+  //  FILE* spOutput40964;  // for 40964
+  //  FILE* spOutput40978; // for 40978
+  //  FILE* spOutput40981; // for 40981
     
     // based on #define line at top of file - open files using either:
-    // MacBook Pro directory (#define MacBook_Pro
+    // MacBook Pro directory (#define MacBook_Pro)
     // Mac Mini directory structure (#define CHARLES_Mini)
     // Mike's directory structure (#define MIKE)
     
@@ -148,12 +149,12 @@ int main(void)
     spInput = fopen("/Users/Charles/Documents/satellites_to_analyze/alltle.txt", "r");  // read data from folder where the code is - now taken from
   //  spOutput = fopen("/Users/Charles/Documents/satellites_analyzed/sorted/sats_out.txt", "a");
     // put output in folder "sorted"
-    spOutput40978 = fopen("/Users/Charles/Documents/satellites_analyzed/noss/40978.txt", "a");
-    spOutput40964 = fopen("/Users/Charles/Documents/satellites_analyzed/noss/40964.txt", "a");
-    spOutput38773 = fopen("/Users/Charles/Documents/satellites_analyzed/noss/38773.txt", "a");
-    spOutput38758 = fopen("/Users/Charles/Documents/satellites_analyzed/noss/38758.txt", "a");
-    spOutput38770 = fopen("/Users/Charles/Documents/satellites_analyzed/noss/38770.txt", "a");
-    spOutput40981 = fopen("/Users/Charles/Documents/satellites_analyzed/noss/40981.txt", "a");
+    spOutput11720 = fopen("/Users/Charles/Documents/satellites_analyzed/11720.txt", "a");
+    spOutput16591 = fopen("/Users/Charles/Documents/satellites_analyzed/16591.txt", "a");
+  //  spOutput38773 = fopen("/Users/Charles/Documents/satellites_analyzed/noss/38773.txt", "a");
+ //  spOutput38758 = fopen("/Users/Charles/Documents/satellites_analyzed/noss/38758.txt", "a");
+  //  spOutput38770 = fopen("/Users/Charles/Documents/satellites_analyzed/noss/38770.txt", "a");
+ //  spOutput40981 = fopen("/Users/Charles/Documents/satellites_analyzed/noss/40981.txt", "a");
 #endif
     
 #ifdef MIKE
@@ -178,14 +179,15 @@ int main(void)
         cardTwo (second_card);  // call function to read second card, card #1
         cardThree (third_card);  // call function to read third card, card #2
 //
-        if (satno1 == 38773)
+        if (satno1 == 11720)
         {
-            printParameters (spOutput38773);  //creates file with just 38773
+            printParameters (spOutput11720);  //creates file with just 11720
         }
-        else if (satno1 == 38758)
+        else if (satno1 == 16591)
         {
-            printParameters (spOutput38758);  //creates file
+            printParameters (spOutput16591);  //creates file
         }
+        /*
         else if (satno1 == 38770)
         {
             printParameters(spOutput38770);
@@ -202,6 +204,7 @@ int main(void)
         {
             printParameters(spOutput40981);
         }
+         */
         else
         {
             printParameters(stdout); //didn't match either so just print to terminal
@@ -212,12 +215,15 @@ int main(void)
  //  fclose(spOutput);  // close file we put output into
     fclose(spInput);  // close file we get input from
     
-    fclose(spOutput40978);
-    fclose(spOutput40964);
+    fclose(spOutput11720);
+    fclose(spOutput16591);
+   
+    /*
     fclose(spOutput38773);
     fclose(spOutput38758);
     fclose(spOutput38770);
     fclose(spOutput40981);
- 
+ */
+    
     return 0;
 }  // end main, sends to functions to read cards, parse parameters (duh)
