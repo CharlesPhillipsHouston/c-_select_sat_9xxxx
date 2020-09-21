@@ -116,8 +116,8 @@ int main(void)
     FILE* spInput; // input points to file to read from
     
    // FILE* spOutput; // output points to file to write to
-    FILE* spOutput11720;  // 11720 - low perigee
-    FILE* spOutput16591; // for 16591
+    FILE* spOutput22519;  // 22519 - low perigee
+  //  FILE* spOutput16591; // for 16591
     
   // FILE* spOutput38773;  // a file just for TLEs for 38773
   //  FILE* spOutput40964;  // for 40964
@@ -149,8 +149,8 @@ int main(void)
     spInput = fopen("/Users/Charles/Documents/satellites_to_analyze/alltle.txt", "r");  // read data from folder where the code is - now taken from
   //  spOutput = fopen("/Users/Charles/Documents/satellites_analyzed/sorted/sats_out.txt", "a");
     // put output in folder "sorted"
-    spOutput11720 = fopen("/Users/Charles/Documents/satellites_analyzed/11720.txt", "a");
-    spOutput16591 = fopen("/Users/Charles/Documents/satellites_analyzed/16591.txt", "a");
+    spOutput22519 = fopen("/Users/Charles/Documents/satellites_analyzed/22519.txt", "a");
+  //  spOutput16591 = fopen("/Users/Charles/Documents/satellites_analyzed/16591.txt", "a");
   //  spOutput38773 = fopen("/Users/Charles/Documents/satellites_analyzed/noss/38773.txt", "a");
  //  spOutput38758 = fopen("/Users/Charles/Documents/satellites_analyzed/noss/38758.txt", "a");
   //  spOutput38770 = fopen("/Users/Charles/Documents/satellites_analyzed/noss/38770.txt", "a");
@@ -179,15 +179,15 @@ int main(void)
         cardTwo (second_card);  // call function to read second card, card #1
         cardThree (third_card);  // call function to read third card, card #2
 //
-        if (satno1 == 11720)
+        if (satno1 == 22519)
         {
-            printParameters (spOutput11720);  //creates file with just 11720
+            printParameters (spOutput22519);  //creates file with just 22519
         }
-        else if (satno1 == 16591)
+      /*  else if (satno1 == 16591)
         {
             printParameters (spOutput16591);  //creates file
         }
-        /*
+        
         else if (satno1 == 38770)
         {
             printParameters(spOutput38770);
@@ -215,8 +215,8 @@ int main(void)
  //  fclose(spOutput);  // close file we put output into
     fclose(spInput);  // close file we get input from
     
-    fclose(spOutput11720);
-    fclose(spOutput16591);
+    fclose(spOutput22519);
+  //  fclose(spOutput16591);
    
     /*
     fclose(spOutput38773);
