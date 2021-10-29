@@ -101,24 +101,30 @@ int main(void)
     cout << "\t 3: Mike" << endl;
     cout << "\t 0: use current directory" << endl;
     int comp = -1;
-    while(comp < 0 or comp > 3){
+    while(comp < 0 or comp > 3)
+    {
         while (!(cin >> comp) or comp > 3 or comp < 0) {
             cin.clear();
             cin.ignore();
             cout << "Not a valid choice, try again: ";
-        }
+        }  // error check to make sure the user chose a valid computer
     }
 // needed to clear input buffer??
     cin.clear();
     cin.ignore();
 
+    /*
+     /Users/charlesphillips/Desktop/analyses/input_tles.txt
+     
+     */
+    
     string datapath;
     switch (comp) {
         case 1: //Charles Mini
             datapath = "/Users/Charles/Documents/satellites_to_analyze/";
             break;
         case 2: //Charles MacBook
-            datapath = "/Users/Admin/Documents/sequential_TLEs/sorted/";
+            datapath = "/Users/charlesphillips/Desktop/analyses/";
             break;
         case 3: //Mike's computer
             datapath = "/Users/mike/Dropbox/Projects/Charles/testdata/";
@@ -143,13 +149,14 @@ int main(void)
 //    cout << endl;
 
     // Open the input file
-    FILE* spInput = fopen ((datapath+"tle_input.txt").c_str(),"r");
+    FILE* spInput = fopen ((datapath+"input_tles.txt").c_str(),"r");
     
     //Now open an output file for each satellite to process
     //note: the file * will be NULL if file can't be opened
     std::vector<FILE *> spOutputFiles;
     std::string filename;
-    for (unsigned i = 0; i < satsToProcess.size(); i++){
+    for (unsigned i = 0; i < satsToProcess.size(); i++)
+    {
         filename = datapath + "spOutput" + std::to_string(satsToProcess[i]) + ".txt";
         cout << "opening file: " + filename << endl;
         spOutputFiles.push_back(fopen(filename.c_str(), "a"));
@@ -166,7 +173,8 @@ int main(void)
         cardTwo (second_card);  // call function to read second card, card #1
         cardThree (third_card);  // call function to read third card, card #2
 //
-        for (unsigned i = 0; i < satsToProcess.size(); i++){
+        for (unsigned i = 0; i < satsToProcess.size(); i++)
+        {
             if(satno1 == satsToProcess[i]){
                 if(spOutputFiles[i] != NULL){
                     printParameters(spOutputFiles[i]);
@@ -177,7 +185,8 @@ int main(void)
     
     fclose(spInput);  // close file we get input from
     // close all the output files
-    for (unsigned i = 0; i < spOutputFiles.size(); i++){
+    for (unsigned i = 0; i < spOutputFiles.size(); i++)
+    {
         fclose(spOutputFiles[i]);
     }
 //    fclose(spOutput22519);
