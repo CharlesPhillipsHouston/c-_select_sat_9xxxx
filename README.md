@@ -1,5 +1,2 @@
 # c-_select_sat_9xxxx
-select sat that gets noss satellites now
-This is a modification of an application that reads in a file of TLEs and outputs selected TLEs into files. 
-It reads a file with many satellites and outputs each into its own file.
-I need to save it under a better name!!
+This takes an input file of TLEs and finds satellites. The user is prompted which satellite they want. The program outputs each satellite in its own file. This runs as a "terminal application" on the desktop.
