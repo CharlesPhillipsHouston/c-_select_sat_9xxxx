@@ -1,34 +1,28 @@
 //  select sats
-//  this is the C code compiled with C++
+//  as of 29 oct 2021
 //  Copyright © 2019 charles phillips. All rights reserved.
 //  read in a TLE, all three lines, and fscanf the individual lines
 // runs on Mike's computer, on the MacBook Pro, and on the Mac Mini
 // this finds a list of satellites and puts them into their own files
-// right now it gets a few of the later NOSS satellites
 
 #include <iostream>
 #include <stdio.h>
 #include <string.h> // strtok, strcpy stuff not even used yet
 #include <stdlib.h> // atoi, atof not used yet
 #include <math.h>  // math functions
+#include <string> // c++ string data type & operators
+#include <sstream>
+#include <vector>
 
-// uncomment on of the two following depending on who's directory structure in use
-  #define CHARLES_Mini
- // #define CHARLES_MacBook
-// #define MIKE
-
-// set up constants needed
-#define MU  398600.4418  // gravitational parameter
-#define min_per_day  1440  // minutes per day
-#define sec_per_day  86400   //seconds per day
-#define PI        3.141592653589
-#define Two_Pi  6.283185307  // 2 times Pi (for use in finding semi-major axis)
+using namespace std; // so I can just use cin / cout not std::cin / std::out
 
 // define strings, each card starts as a string
-char name_card[80] = {0};  // imported first card of three, name (not needed)
-char second_card[80] = {0}; // imported second line, card 1
-char third_card[80] = {0}; // imported third line, card 2
-char LINE_LEN = 80;  // define line length as 80 char  is this a good definition? =80
+#define LINE_LEN 80
+char name_card[LINE_LEN] = {0};  // imported first card of three, name (not needed)
+char second_card[LINE_LEN] = {0}; // imported second line, card 1
+char third_card[LINE_LEN] = {0}; // imported third line, card 2
+// should use a #define for this in my opinion
+//char LINE_LEN = 80;  // define line length as 80 char  is this a good definition? =80
 
 // define variables, no structure here!!
 int card1;
@@ -54,22 +48,15 @@ float intermediate_three = 0.0; // intermediate two, cube root
 float semi_major = 0.0; // semi-major axis cube root of: mu * intermediate three squared
 // set variables as float - intermediate_one, _two, _three
 // they were defined as long integers!
-void inputFile (FILE* input);   // read from file
+//void inputFile (FILE* input);   // read from file
 
-void printParameters (FILE* output);  // print to display, file
+//void printParameters (FILE* output);  // print to display, file
 
-// define functions
-char cardOne (char* name_card);
-// parse name card to try to get rid of char return
-char cardTwo (char* second_card);  // parse card #1
-char cardThree (char* third_card);  // parse card #2
-
-void inputFile (FILE* spInput)  // read from input file, this works (duh)
+void inputFile (FILE* spInput)  // read 3 lines from input file
 {
-    fgets(name_card, LINE_LEN, spInput);  // get first line of TLE
-    fgets(second_card, LINE_LEN, spInput);  // get first line of TLE, outside of the while
-    fgets(third_card, LINE_LEN, spInput);  // outside of the while loop
-    // how do these statements know to go to sequential lines?
+    fgets(name_card, sizeof(name_card), spInput);  // get first line of TLE
+    fgets(second_card, sizeof(second_card), spInput);  // get second line of TLE
+    fgets(third_card, sizeof(third_card), spInput);  // get third line of TLE
 } // end of inputFile
 
 char cardOne (char* name_card)  // this reads name card!!
@@ -84,7 +71,6 @@ char cardTwo (char* second_card)
 // this reads second card!! no need to print this
 {
     sscanf (second_card, "%d %6dU %6c %f", &card1, &satno1, &int_des, &epoch); // scan card #1
-
     return 0;
 }
 
@@ -98,12 +84,6 @@ char cardThree (char* third_card)  // this reads third card!!
 
 void printParameters (FILE* spOutput)   // move all print statements here???
 {
-    // the next three lines print everything - just to demo printing to two files
-   // printf("name card: %s \n", name_card);
-  //  printf("second card: %s \n", second_card);
-  //  printf("third card: %s \n", third_card);
-    
-     //let's try printing from inside the print function
     fprintf(spOutput, "%s", name_card);
     fprintf(spOutput, "%s", second_card);
     fprintf(spOutput, "%s", third_card);
@@ -113,117 +93,102 @@ void printParameters (FILE* spOutput)   // move all print statements here???
 int main(void)
 {
     // let's look at some satellites with low perigees
-    FILE* spInput; // input points to file to read from
-    
-   // FILE* spOutput; // output points to file to write to
-    FILE* spOutput22519;  // 22519 - low perigee
-  //  FILE* spOutput16591; // for 16591
-    
-  // FILE* spOutput38773;  // a file just for TLEs for 38773
-  //  FILE* spOutput40964;  // for 40964
-  //  FILE* spOutput40978; // for 40978
-  //  FILE* spOutput40981; // for 40981
-    
-    // based on #define line at top of file - open files using either:
-    // MacBook Pro directory (#define MacBook_Pro)
-    // Mac Mini directory structure (#define CHARLES_Mini)
-    // Mike's directory structure (#define MIKE)
-    
-#ifdef CHARLES_MacBook
-    spInput = fopen("/Users/Admin/Documents/sequential_TLEs/sorted/input_tles.txt", "r");  // read data from folder where the code is - now taken from
-    // this took a while - now the program outputs to two files!
-    //  spOutput = fopen("/Users/Charles/Documents/satellites_analyzed/sorted/sats_out.txt", "a");
-    // put output in folder "sorted"
-    
-    spOutput40978 = fopen("/Users/Admin/Documents/satellites_analyzed/40978.txt","a");
-    spOutput40964 = fopen("/Users/Admin/Documents/satellites_analyzed/40964.txt", "a");
-    spOutput38773 = fopen("/Users/Admin/Documents/satellites_analyzed/38773.txt", "a");  // put output in folder "sorted"
-    spOutput90115 = fopen("/Users/Admin/Documents/satellites_analyzed/90115.txt", "a");
-    spOutput38770 = fopen("/Users/Admin/Documents/satellites_analyzed/38770.txt", "a") ;
-    
-   
-    
-#endif
 
-#ifdef CHARLES_Mini
-    spInput = fopen("/Users/Charles/Documents/satellites_to_analyze/alltle.txt", "r");  // read data from folder where the code is - now taken from
-  //  spOutput = fopen("/Users/Charles/Documents/satellites_analyzed/sorted/sats_out.txt", "a");
-    // put output in folder "sorted"
-    spOutput22519 = fopen("/Users/Charles/Documents/satellites_analyzed/22519.txt", "a");
-  //  spOutput16591 = fopen("/Users/Charles/Documents/satellites_analyzed/16591.txt", "a");
-  //  spOutput38773 = fopen("/Users/Charles/Documents/satellites_analyzed/noss/38773.txt", "a");
- //  spOutput38758 = fopen("/Users/Charles/Documents/satellites_analyzed/noss/38758.txt", "a");
-  //  spOutput38770 = fopen("/Users/Charles/Documents/satellites_analyzed/noss/38770.txt", "a");
- //  spOutput40981 = fopen("/Users/Charles/Documents/satellites_analyzed/noss/40981.txt", "a");
-#endif
+    cout << "Which Mac are you on:" << endl;
+    cout << "\t 1: Charles Mini" << endl;
+    cout << "\t 2: Charles MacBook" << endl;
+    cout << "\t 3: Mike" << endl;
+    cout << "\t 0: use current directory" << endl;
+    int comp = -1;
+    while(comp < 0 or comp > 3)
+    {
+        while (!(cin >> comp) or comp > 3 or comp < 0) {
+            cin.clear();
+            cin.ignore();
+            cout << "Not a valid choice, try again: ";
+        }  // error check to make sure the user chose a valid computer
+    }
+// needed to clear input buffer??
+    cin.clear();
+    cin.ignore();
+
+    /*
+     /Users/charlesphillips/Desktop/analyses/input_tles.txt
+     
+     */
     
-#ifdef MIKE
-    spInput = fopen("/Users/mike/Dropbox/Projects/Charles/tle_cards.txt", "r");  // read data from folder where the code is - now taken from
+    string datapath;
+    switch (comp) {
+        case 1: //Charles Mini
+            datapath = "/Users/Charles/Documents/satellites_to_analyze/";
+            break;
+        case 2: //Charles MacBook
+            datapath = "/Users/charlesphillips/Desktop/analyses/";
+            break;
+        case 3: //Mike's computer
+            datapath = "/Users/mike/Dropbox/Projects/Charles/testdata/";
+            break;
+        default:
+            datapath = ""; //just use current directory
+    }
+    cout << "Datapath set to: " << datapath << endl;
+
+// Now get a list of satellite numbers to process
+    cout << "Enter list of satellites to process: " << endl;
+    std::string line;
+    std::getline(std::cin, line);
+    std::istringstream thisLine(line);
+    std::istream_iterator<int> begin(thisLine), end;
+    std::vector<int> satsToProcess(begin, end);
+
+//    cout << "Sats to process:";
+//    for (unsigned i = 0; i < satsToProcess.size(); i++){
+//        cout << ' ' << satsToProcess[i];
+//    }
+//    cout << endl;
+
+    // Open the input file
+    FILE* spInput = fopen ((datapath+"input_tles.txt").c_str(),"r");
     
-    spOutput40978 = fopen("/Users/mike/Dropbox/Projects/Charles/40978.txt","a");
-    spOutput40964 = fopen("/Users/mike/Dropbox/Projects/Charles/40964.txt", "a");
-    spOutput38773 = fopen("/Users/mike/Dropbox/Projects/Charles/38772.txt", "a");
-    
-    spOutput90115 = fopen("/Users/mike/Dropbox/Projects/Charles/90115.txt", "a");
-    spOutput90122 = fopen("/Users/mike/Dropbox/Projects/Charles/38770.txt", "a") ;
-#endif
+    //Now open an output file for each satellite to process
+    //note: the file * will be NULL if file can't be opened
+    std::vector<FILE *> spOutputFiles;
+    std::string filename;
+    for (unsigned i = 0; i < satsToProcess.size(); i++)
+    {
+        filename = datapath + "spOutput" + std::to_string(satsToProcess[i]) + ".txt";
+        cout << "opening file: " + filename << endl;
+        spOutputFiles.push_back(fopen(filename.c_str(), "a"));
+        if(spOutputFiles[i] == NULL){
+            cout << "File " << filename << " could not be opened." << endl;
+        }
+    }
 
     while (feof(spInput) == 0)
     {
         
         inputFile (spInput);  // go to function inputFile and read lines
-        
-        //  printf("\ncards input, for test print three cards\n\n");
-        
         cardOne(name_card); // call function to scan name card
         cardTwo (second_card);  // call function to read second card, card #1
         cardThree (third_card);  // call function to read third card, card #2
 //
-        if (satno1 == 22519)
+        for (unsigned i = 0; i < satsToProcess.size(); i++)
         {
-            printParameters (spOutput22519);  //creates file with just 22519
+            if(satno1 == satsToProcess[i]){
+                if(spOutputFiles[i] != NULL){
+                    printParameters(spOutputFiles[i]);
+                }
+            }
         }
-      /*  else if (satno1 == 16591)
-        {
-            printParameters (spOutput16591);  //creates file
-        }
-        
-        else if (satno1 == 38770)
-        {
-            printParameters(spOutput38770);
-        }
-        else if (satno1 == 40964)
-        {
-            printParameters (spOutput40964);  //creates file
-        }
-        else if (satno1 == 40978)
-        {
-            printParameters(spOutput40978);
-        }
-        else if (satno1 == 40981)
-        {
-            printParameters(spOutput40981);
-        }
-         */
-        else
-        {
-            printParameters(stdout); //didn't match either so just print to terminal
-        }
-
     } // end while reading input file
     
- //  fclose(spOutput);  // close file we put output into
     fclose(spInput);  // close file we get input from
-    
-    fclose(spOutput22519);
-  //  fclose(spOutput16591);
-   
-    /*
-    fclose(spOutput38773);
-    fclose(spOutput38758);
-    fclose(spOutput38770);
-    fclose(spOutput40981);
- */
+    // close all the output files
+    for (unsigned i = 0; i < spOutputFiles.size(); i++)
+    {
+        fclose(spOutputFiles[i]);
+    }
+//    fclose(spOutput22519);
     
     return 0;
-}  // end main, sends to functions to read cards, parse parameters (duh)
+}
