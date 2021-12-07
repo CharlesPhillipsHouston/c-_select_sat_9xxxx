@@ -1,5 +1,5 @@
 //  select sats
-//  as of 29 oct 2021
+//  as of 6 dec 2021
 //  Copyright © 2019 charles phillips. All rights reserved.
 //  read in a TLE, all three lines, and fscanf the individual lines
 // runs on Mike's computer, on the MacBook Pro, and on the Mac Mini
