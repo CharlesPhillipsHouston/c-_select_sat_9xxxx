@@ -112,10 +112,9 @@ int main(void)
     cin.clear();
     cin.ignore();
 
-    
     //Users/charlesphillips/Desktop/analyses/input_tles.txt
      
-     
+
     
     string datapath;
     switch (comp) {
