@@ -84,6 +84,7 @@ char cardThree (char* third_card)  // this reads third card!!
 
 void printParameters (FILE* spOutput)   // move all print statements here???
 {
+    fprintf(spOutput, "Output TLEs for Selected Satellites");
     fprintf(spOutput, "%s", name_card);
     fprintf(spOutput, "%s", second_card);
     fprintf(spOutput, "%s", third_card);
