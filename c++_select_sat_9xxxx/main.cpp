@@ -3,6 +3,7 @@
 //  Copyright © 2019 charles phillips. All rights reserved.
 //  read in a TLE, all three lines, and fscanf the individual lines
 // runs on Mike's computer, on the MacBook Pro, and on the Mac Mini
+// this is a terminal application that asks for satellite numbers
 // this finds a list of satellites and puts them into their own files
 
 #include <iostream>
@@ -121,7 +122,7 @@ int main(void)
     string datapath;
     switch (comp) {
         case 1: //Charles Mini
-            datapath = "/Users/Charles/Documents/satellites_to_analyze/";
+            datapath = "/Users/Charles/Desktop/analyses/highinclination/";
             break;
         case 2: //Charles MacBook
             datapath = "/Users/charlesphillips/Desktop/analyses/";
@@ -149,7 +150,7 @@ int main(void)
 //    cout << endl;
 
     // Open the input file
-    FILE* spInput = fopen ((datapath+"input_tles.txt").c_str(),"r");
+    FILE* spInput = fopen ((datapath+"tles.txt").c_str(),"r");
     
     //Now open an output file for each satellite to process
     //note: the file * will be NULL if file can't be opened
