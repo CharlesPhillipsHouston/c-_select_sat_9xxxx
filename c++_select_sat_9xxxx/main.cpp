@@ -1,5 +1,5 @@
 //  select sats
-//  as of 29 oct 2021
+//  as of 2 aug 2023
 //  Copyright © 2019 charles phillips. All rights reserved.
 //  read in a TLE, all three lines, and fscanf the individual lines
 // runs on Mike's computer, on the MacBook Pro, and on the Mac Mini
@@ -16,7 +16,8 @@
 
 using namespace std; // so I can just use cin / cout not std::cin / std::out
 
-// define strings, each card starts as a string
+// define strings, each card starts as a string1
+
 #define LINE_LEN 80
 char name_card[LINE_LEN] = {0};  // imported first card of three, name (not needed)
 char second_card[LINE_LEN] = {0}; // imported second line, card 1
